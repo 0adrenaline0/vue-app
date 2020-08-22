@@ -1,0 +1,57 @@
+*, *:before, *:after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  overflow: overlay;
+}
+
+main {
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  margin: 3rem 1rem;
+}
+
+table {
+  text-align: center;
+
+  td {
+    padding: 0.2rem;
+  }
+  td:nth-child(1) {
+    font-weight: bold;
+  }
+}
+
+a, h1 {
+  text-decoration: none !important;
+  font-size: 1rem;
+  text-align: center;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+h1 {
+  font-size: 3rem;
+  margin-bottom: 2rem;
+}
+
+input, button {
+  border-radius: 2px;
+  border: 1px solid rgba(0,0,0,0.2);
+}
+
+button {
+  height: 1.3rem;
+  cursor: pointer;
+
+  &:focus {
+    outline: none;
+  }
+
+  &:active {
+    transform: translateY(0.5px);
+  }
+}
