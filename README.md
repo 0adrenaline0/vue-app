@@ -1,24 +1,5 @@
 # vue-app
 
-## Project setup
-```
-npm install
-```
-
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+This is test app based on Vue [Vue Router, Vuex].
+Data about accounts and posts is stored in Vuex storage modules.
+In the future development of the project this data will of course be stored on the server.
