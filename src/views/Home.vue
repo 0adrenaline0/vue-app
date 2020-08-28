@@ -1,4 +1,4 @@
-<template>
+<template functional>
   <main id="content">
     <h1>Home</h1>
     <p>
@@ -8,13 +8,13 @@
 </template>
 
 <script>
-  export default {
-    name: 'Home'
-  }
+export default {
+  name: 'Home'
+}
 </script>
 
 <style scoped>
-  #content {
-    flex-direction: column;
-  }
+p {
+  margin: 2rem 0;
+}
 </style>

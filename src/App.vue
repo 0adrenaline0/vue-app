@@ -2,29 +2,30 @@
   <div id="app">
     <Navigation />
     <div id="wrap">
-      <router-view />
+      <keep-alive include="Posts,User">
+        <router-view />
+      </keep-alive>
     </div>
   </div>
 </template>
 
 <script>
-  import Navigation from '@/components/Navigation'
+import Navigation from '@/components/Navigation'
 
-  export default {
-    name: 'App',
-    components: {
-      Navigation
-    }
+export default {
+  name: 'App',
+  components: {
+    Navigation
   }
+}
 </script>
 
 <style>
-  #wrap {
-    max-width: 640px;
-    margin: 2.4rem auto 0 auto;
-  }
-  #app {
-    display: flex;
-    flex-direction: column;
-  }
+#app {
+  display: flex;
+  flex-direction: column;
+}
+#wrap {
+  margin: 2.4rem auto 0 auto;
+}
 </style>

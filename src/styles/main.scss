@@ -9,10 +9,18 @@ body {
 }
 
 main {
+  max-width: 640px;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: stretch;
   margin: 3rem 1rem;
+}
+
+#list {
+  display: grid;
+  row-gap: 1rem;
+  margin: 2rem 0;
 }
 
 table {
@@ -26,7 +34,7 @@ table {
   }
 }
 
-a, h1 {
+a {
   text-decoration: none !important;
   font-size: 1rem;
   text-align: center;
@@ -35,23 +43,39 @@ a, h1 {
 
 h1 {
   font-size: 3rem;
-  margin-bottom: 2rem;
+  text-align: center;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
-input, button {
+form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+}
+
+input {
+  height: 2rem;
+  margin-bottom: 0.4rem;
+  padding: 0.2rem;
   border-radius: 2px;
   border: 1px solid rgba(0,0,0,0.2);
 }
 
 button {
-  height: 1.3rem;
   cursor: pointer;
+  height: 1.3rem;
+  border-radius: 2px;
+  border: 1px solid rgba(0,0,0,0.2);
 
-  &:focus {
-    outline: none;
-  }
+  &:focus { outline: none; }
+  &:active { transform: translateY(0.5px); }
+}
 
-  &:active {
-    transform: translateY(0.5px);
-  }
+textarea {
+  resize: none;
+  margin-bottom: 0.4rem;
+  padding: 0.2rem;
+  border-radius: 2px;
+  border: 1px solid rgba(0,0,0,0.2);
 }

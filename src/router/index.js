@@ -2,56 +2,61 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import store from '@/store'
 
-import Home from '@/views/Home'
-import Posts from '@/views/Posts'
-import Login from '@/views/Login'
-import User from '@/views/User'
-import NotFound from '@/views/NotFound'
-
 Vue.use(VueRouter)
 
-export default new VueRouter({
+const router = new VueRouter({
   mode: 'history',
   routes: [
     {
-      name: 'home',
       path: '/',
-      component: Home
+      component: () => import('@/views/Home')
     },
     {
-      name: 'posts',
       path: '/posts',
-      component: Posts
+      component: () => import('@/views/Posts')
     },
     {
       path: '/login',
-      component: Login,
       beforeEnter: (to, from, next) => {
-        if (!store.auth)
+        if (store.state.auth) {
+          next('/');
+        } else {
           next();
-        else {
-          console.log(store.auth)
-          next(false);
         }
-      }
+      },
+      component: () => import('@/views/Login')
     },
     {
       path: '/unlogin',
       meta: { needAuth: true },
       beforeEnter: (to, from, next) => {
-        store.commit('logoutUser');
-        next({ name: 'home' });
+        store.commit('unsetAuth');
+        next('/');
       }
     },
     {
       name: 'user',
       path: '/user/:username',
-      component: User,
-      meta: { needAuth: true }
+      meta: { needAuth: true },
+      component: () => import('@/views/User')
     },
     {
       path: '*',
-      component: NotFound
+      component: () => import('@/views/NotFound')
     }
   ]
 });
+
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.needAuth)) {
+    if (!store.state.auth) {
+      next('/login');
+    } else {
+      next();
+    }
+  } else {
+    next();
+  }
+});
+
+export default router;

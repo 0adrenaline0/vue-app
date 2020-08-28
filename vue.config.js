@@ -10,9 +10,6 @@ module.exports = {
     }
   },
   lintOnSave: false,
-  css: {
-    requireModuleExtension: false
-  },
   configureWebpack: {
     optimization: {
       splitChunks: {

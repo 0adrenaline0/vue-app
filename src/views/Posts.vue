@@ -1,74 +1,89 @@
 <template>
   <main id="content">
     <h1>Posts</h1>
+    <form
+      v-if="auth"
+      @submit.prevent
+    >
+      <input
+        v-model.trim="postTitle"
+        type="text"
+        maxlength="64"
+        placeholder="Title"
+        required
+      >
+      <textarea
+        v-model.trim="postText"
+        maxlength="1000"
+        placeholder="Add your text..."
+        wrap="soft"
+        rows="14"
+        required
+      ></textarea>
+      <button
+        @click="createPost"
+        :disabled="!postTitle || !postText"
+      >Create post</button>
+    </form>
     <div id="list">
-      <div id="post" v-for="post in posts" :key="post.id">
-        <h3 id="title">{{ post.title }}</h3>
-        <p id="text">{{ post.text }}</p>
-        <div id="info">
-          <span>{{ post.author }}</span>
-          <span>{{ new Date(post.date * 1000).toGMTString().slice(4,-7) }}</span>
-        </div>
-      </div>
-      <button @click="updateList">Show more posts</button>
+      <Post
+        v-for="post in posts"
+        :key="`post${post.id}`"
+        :post="post"
+      />
     </div>
+    <Preloader v-if="!posts.length" />
+    <button
+      v-if="posts.length"
+      @click="updatePosts"
+    >Show more posts</button>
   </main>
 </template>
 
 <script>
-  import { mapGetters } from 'vuex';
+import { mapState } from 'vuex'
+import Preloader from '@/components/Preloader'
+import Post from '@/components/Post'
 
-  export default {
-    name: 'Posts',
-    data: () => ({
-      posts: []
-    }),
-    computed: mapGetters({ getPosts: 'posts/getPosts' }),
-    methods: {
-      updateList() {
-        let data = this.getPosts({ offset: this.posts.length, count: 2 });
-        this.posts = data ? this.posts.concat(data) : this.posts;
-      }
+export default {
+  name: 'Posts',
+  data: () => ({
+    posts: [],
+    postTitle: '',
+    postText: ''
+  }),
+  computed: mapState(['auth']),
+  components: {
+    Preloader,
+    Post
+  },
+  methods: {
+    createPost() {
+      this.$store.dispatch('createPost', {
+        id: '',
+        date: ~~(new Date().getTime() / 1000),
+        author: this.auth.username,
+        title: this.postTitle,
+        text: this.postText,
+      })
+        .then(data => this.posts.unshift(data));
     },
-    created() {
-      this.updateList();
-    },
+    updatePosts() {
+      this.$store.dispatch('getPosts', { offset: this.posts.length, count: 2 })
+        .then(data => (this.posts = data ? this.posts.concat(data) : this.posts));
+    }
+  },
+  created() {
+    this.updatePosts();
   }
+}
 </script>
 
-<style lang="scss" scoped>
-  #content {
-    flex-direction: column;
-
-    #list {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: stretch;
-
-      #post {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: stretch;
-        margin: 1rem 0;
-        padding: 1rem;
-        border: 1px solid rgba(0,0,0,0.1);
-
-        #text {
-          margin: 0.2rem 0;
-          padding: 1rem 0;
-          border: 1px solid rgba(0,0,0,0.3);
-          border-width: 1px 0;
-        }
-
-        #info {
-          display: flex;
-          flex-flow: row nowrap;
-          justify-content: space-between;
-          align-items: stretch;
-        }
-      }
-    }
-  }
+<style scoped>
+#content {
+  width: 640px;
+}
+form {
+  margin-top: 2rem;
+}
 </style>

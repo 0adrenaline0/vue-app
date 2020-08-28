@@ -3,7 +3,7 @@
     <nav id="navigation">
       <router-link to="/" exact>Home</router-link>
       <router-link to="/posts">Posts</router-link>
-      <router-link v-if="auth" :to="{ name: 'user', params: { 'username': auth }}">User</router-link>
+      <router-link v-if="auth" :to="{ name: 'user', params: { 'username': auth.username }}">User</router-link>
       <router-link v-if="!auth" to="/login">Login</router-link>
       <router-link v-if="auth" to="/unlogin">Unlogin</router-link>
     </nav>
@@ -14,7 +14,7 @@
   import { mapState } from 'vuex';
 
   export default {
-    name: 'Header',
+    name: 'navigation-bar',
     computed: mapState({
       auth: state => state.auth
     })
@@ -32,17 +32,16 @@
     border-bottom: 1px solid rgba(0,0,0,0.2);
   }
   #navigation {
-    display: flex;
+    display: grid;
+    grid-auto-flow: column;
     justify-content: center;
-    align-items: stretch;
+    column-gap: 1rem;
   }
   #navigation > a {
-    margin: 0 0.5rem;
     padding: 0 1rem;
   }
-  a[aria-current] {
-    border-style: solid;
-    border-width: 0 1px;
-    border-radius: 8%;
+  .router-link-active {
+    outline: auto;
+    outline-offset: 2px;
   }
 </style>

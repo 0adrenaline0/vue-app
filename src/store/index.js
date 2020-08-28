@@ -1,27 +1,42 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-import users from './modules/users.js'
-import posts from './modules/posts.js'
-
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    auth: localStorage.getItem('auth')
+    auth: JSON.parse(localStorage.getItem('auth')),
+    baseURL: 'https://0adrenaline0.pythonanywhere.com',
   },
   mutations: {
-    loginUser: (state, data) => {
+    setAuth: (state, data) => {
       state.auth = data;
-      localStorage.setItem('auth', data);
+      localStorage.setItem('auth', JSON.stringify(data));
     },
-    logoutUser: state => {
+    unsetAuth: state => {
       state.auth = null;
       localStorage.removeItem('auth');
     }
   },
-  modules: {
-    users,
-    posts
+  actions: {
+    login: ({ state, commit }, data) => {
+      return Vue.axios.post(state.baseURL + '/login', data)
+      .then(response => {
+        if (response.data) {
+          commit('setAuth', data)
+          return true;
+        } else {
+          return false;
+        }
+      });
+    },
+    getPosts: ({ state }, data) => {
+      return Vue.axios.post(state.baseURL + '/getPosts', data)
+      .then(response => response.data);
+    },
+    createPost: ({ state }, data) => {
+      return Vue.axios.post(state.baseURL + '/createPost', data)
+      .then(response => response.data);
+    }
   }
 })

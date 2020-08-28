@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import Axios from './plugins/axios'
 
 import App from '@/App.vue'
 import router from '@/router'
@@ -12,17 +13,6 @@ new Vue({
   el: '#app',
   store,
   router,
+  Axios,
   render: h => h(App)
 });
-
-router.beforeEach((to, from, next) => {
-  if (to.matched.some(record => record.meta.needAuth)) {
-    if (!store.state.auth) {
-      next({ path: '/login' })
-    } else {
-      next()
-    }
-  } else {
-    next()
-  }
-})
