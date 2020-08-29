@@ -38,13 +38,11 @@ export default {
   }),
   methods: {
     login() {
-      let username = this.username;
-      let password = this.password;
-      if (username && password) {
-        this.$store.dispatch('login', { username, password })
-          .then((event) => event ? this.$router.push('/') : this.isError(true))
-          .catch((error) => console.log(error));
-      }
+      this.$store.dispatch('login', {
+        'username': this.username,
+        'password': this.password
+      })
+        .then((event) => event ? this.$router.push('/') : this.isError(true));
     },
     isError(e) {
       this.error = e;
