@@ -41,9 +41,9 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
-import Preloader from '@/components/Preloader'
-import Post from '@/components/Post'
+import { mapState } from 'vuex';
+import Preloader from '@/components/Preloader';
+import Post from '@/components/Post';
 
 export default {
   name: 'Posts',
@@ -60,13 +60,15 @@ export default {
   methods: {
     createPost() {
       this.$store.dispatch('createPost', {
-        id: '',
+        id: this.posts.length + 1,
         date: ~~(new Date().getTime() / 1000),
         author: this.auth.username,
         title: this.postTitle,
         text: this.postText,
       })
         .then(data => this.posts.unshift(data));
+      this.postTitle = '';
+      this.postText = '';
     },
     updatePosts() {
       this.$store.dispatch('getPosts', { offset: this.posts.length, count: 2 })

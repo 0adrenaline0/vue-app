@@ -3,7 +3,7 @@
     <img id="logo" src="../assets/logo.svg" />
     <form
       @submit.prevent
-      @keydown="isError"
+      @keydown="isError(false)"
     >
       <input
         v-model.trim="username"
@@ -42,7 +42,7 @@ export default {
         'username': this.username,
         'password': this.password
       })
-        .then((event) => event ? this.$router.push('/') : this.isError(true));
+        .then(event => event ? this.$router.push('/') : this.isError(true));
     },
     isError(e) {
       this.error = e ? true : false;

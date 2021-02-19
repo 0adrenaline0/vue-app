@@ -1,11 +1,10 @@
-import Vue from 'vue'
-import Axios from './plugins/axios'
+import Vue from 'vue';
 
-import App from '@/App.vue'
-import router from '@/router'
-import store from '@/store'
+import App from '@/App.vue';
+import router from '@/router';
+import store from '@/store';
 
-import '@/styles/main.scss'
+import '@/styles/main.scss';
 
 Vue.config.productionTip = false;
 
@@ -13,6 +12,5 @@ new Vue({
   el: '#app',
   store,
   router,
-  Axios,
   render: h => h(App)
 });

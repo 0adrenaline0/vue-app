@@ -1,9 +1,10 @@
 <template>
   <main id="content">
-    <h1>{{ this.username }}</h1>
+    <h1>{{ auth.username }}</h1>
     <div id="list">
       <Post
         v-for="post in posts"
+        v-if="post.author == auth.username"
         :key="`post${post.id}`"
         :post="post"
       />
@@ -17,27 +18,27 @@
 </template>
 
 <script>
-import Preloader from '@/components/Preloader'
-import Post from '@/components/Post'
+import { mapState } from 'vuex';
+import Preloader from '@/components/Preloader';
+import Post from '@/components/Post';
 
 export default {
   name: 'User',
   data: () => ({
-    posts: [],
-    username: ''
+    posts: []
   }),
+  computed: mapState(['auth']),
   components: {
     Preloader,
     Post
   },
   methods: {
     updatePosts() {
-      this.$store.dispatch('getPosts', { offset: this.posts.length, count: 2, author: this.username })
+      this.$store.dispatch('getPosts', { offset: this.posts.length, count: 2 })
         .then(data => (this.posts = data ? this.posts.concat(data) : this.posts));
     }
   },
   created() {
-    this.username = this.$route.params.username;
     this.updatePosts();
   }
 }
