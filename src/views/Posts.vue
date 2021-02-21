@@ -1,43 +1,37 @@
-<template>
-  <main id="content">
-    <h1>Posts</h1>
-    <form
-      v-if="auth"
-      @submit.prevent
-    >
-      <input
+<template lang="pug">
+  main#content
+    h1 Posts
+    form(v-if="auth" @submit.prevent)
+      input(
         v-model.trim="postTitle"
         type="text"
         maxlength="64"
         placeholder="Title"
         required
-      >
-      <textarea
+      )
+      textarea(
         v-model.trim="postText"
         maxlength="1000"
         placeholder="Add your text..."
         wrap="soft"
         rows="14"
         required
-      ></textarea>
-      <button
-        @click="createPost"
+      )
+      button(
         :disabled="!postTitle || !postText"
-      >Create post</button>
-    </form>
-    <div id="list">
-      <Post
+        @click="createPost"
+      ) Create Post
+    #list
+      Post(
         v-for="post in posts"
         :key="`post${post.id}`"
         :post="post"
-      />
-    </div>
-    <Preloader v-if="!posts.length" />
-    <button
+      )
+    Preloader(v-if="!posts.length")
+    button(
       v-if="posts.length"
       @click="updatePosts"
-    >Show more posts</button>
-  </main>
+    ) Show more posts
 </template>
 
 <script>
@@ -81,11 +75,10 @@ export default {
 }
 </script>
 
-<style scoped>
-#content {
+<style lang="sass" scoped>
+#content
   width: 640px;
-}
-form {
+
+form
   margin-top: 2rem;
-}
 </style>

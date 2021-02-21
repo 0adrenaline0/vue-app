@@ -36,6 +36,12 @@ export default new VueRouter({
     {
       name: 'user',
       path: '/user/:username',
+      beforeEnter: (to, from, next) => {
+        if (store.state.auth)
+          next('/');
+        else
+          next();
+      },
       component: () => import('@/views/User')
     },
     {

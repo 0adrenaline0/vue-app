@@ -1,12 +1,9 @@
-<template>
-  <div id="app">
-    <Navigation />
-    <div id="wrap">
-      <keep-alive include="Posts,User">
-        <router-view />
-      </keep-alive>
-    </div>
-  </div>
+<template lang="pug">
+  #app
+    Navigation
+    #wrap
+      keep-alive(include="Posts,User")
+        router-view
 </template>
 
 <script>
@@ -20,12 +17,11 @@ export default {
 }
 </script>
 
-<style>
-#app {
+<style lang="sass">
+#app
   display: flex;
   flex-direction: column;
-}
-#wrap {
+
+#wrap
   margin: 2.4rem auto 0 auto;
-}
 </style>

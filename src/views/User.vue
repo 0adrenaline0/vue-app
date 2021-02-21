@@ -1,20 +1,18 @@
-<template>
-  <main id="content">
-    <h1>{{ auth.username }}</h1>
-    <div id="list">
-      <Post
+<template lang="pug">
+  main#content
+    h1 {{auth.username}}
+    #list
+      Post(
         v-for="post in posts"
         v-if="post.author == auth.username"
         :key="`post${post.id}`"
         :post="post"
-      />
-    </div>
-    <Preloader v-if="!posts.length" />
-    <button
+      )
+    Preloader(v-if="!posts.length")
+    button(
       v-if="posts.length"
       @click="updatePosts"
-    >Show more posts</button>
-  </main>
+    ) Show more posts
 </template>
 
 <script>
@@ -44,8 +42,7 @@ export default {
 }
 </script>
 
-<style scoped>
-#content {
+<style lang="sass" scoped>
+#content
   width: 640px;
-}
 </style>

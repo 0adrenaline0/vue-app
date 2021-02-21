@@ -1,31 +1,29 @@
-<template>
-  <main id="content">
-    <img id="logo" src="../assets/logo.svg" />
-    <form
+<template lang="pug">
+  main#content
+    img#logo(src="../assets/logo.svg")
+    form(
       @submit.prevent
       @keydown="isError(false)"
-    >
-      <input
+    )
+      input(
         v-model.trim="username"
         type="username"
         placeholder="username"
         :class="{ errorForm: error }"
-      />
-      <input
+      )
+      input(
         v-model.trim="password"
         type="password"
         placeholder="password"
         minlength="5"
         :class="{ errorForm: error }"
-      />
-      <button
+      )
+      button(
         type="submit"
         tabindex="-1"
         :disabled="!username || !password"
         @click="login"
-      >Log in</button>
-    </form>
-  </main>
+      ) Log in
 </template>
 
 <script>
@@ -51,13 +49,12 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-#logo {
+<style lang="sass" scoped>
+#logo
   width: 15rem;
   margin-bottom: 4rem;
-}
-.errorForm {
+
+.errorForm
   border: 1px solid red;
   transition: 0.1s;
-}
 </style>

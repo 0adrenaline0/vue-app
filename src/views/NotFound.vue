@@ -1,7 +1,6 @@
-<template functional>
-  <main id="content">
-    <h1>404</h1>
-  </main>
+<template functional lang="pug">
+  main#content
+    h1 404
 </template>
 
 <script>

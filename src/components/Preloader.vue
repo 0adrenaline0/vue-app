@@ -1,5 +1,5 @@
-<template>
-  <div id="preloader"></div>
+<template lang="pug">
+  #preloader
 </template>
 
 <script>
@@ -8,16 +8,12 @@
   }
 </script>
 
-<style lang="scss" scoped>
-  #preloader {
-    @keyframes spinner {
-      to { transform: rotate(360deg); }
-    }
-
+<style lang="sass" scoped>
+  #preloader
     height: 30px;
     margin: 1rem 0;
 
-    &:before {
+    &:before
       content: '';
       position: absolute;
       left: 50%;
@@ -28,6 +24,8 @@
       border: 2px solid #ccc;
       border-top-color: #333;
       animation: spinner 0.5s linear infinite;
-    }
-  }
+
+    @keyframes spinner
+      to
+        transform: rotate(360deg);
 </style>
