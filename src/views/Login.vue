@@ -3,47 +3,68 @@
     img#logo(src="../assets/logo.svg")
     form(
       @submit.prevent
-      @keydown="isError(false)"
+      @keydown="wrongData(false)"
     )
       input(
-        v-model.trim="username"
+        v-model.trim="$v.username.$model"
         type="username"
-        placeholder="username"
-        :class="{ errorForm: error }"
+        placeholder="Username"
+        :class="{ errorField: $v.username.$error }"
       )
       input(
-        v-model.trim="password"
+        v-model.trim="$v.password.$model"
         type="password"
-        placeholder="password"
-        minlength="5"
-        :class="{ errorForm: error }"
+        placeholder="Password"
+        :class="{ errorField: $v.password.$error }"
       )
       button(
         type="submit"
         tabindex="-1"
-        :disabled="!username || !password"
         @click="login"
       ) Log in
+    ul(v-if="$v.username.$error")
+      li.error(v-if="!$v.username.required") Username is required
+      li.error(v-if="!$v.username.minLength").
+        Username must have at least {{ $v.username.$params.minLength.min }} letters
+    ul(v-if="$v.password.$error")
+      li.error(v-if="!$v.password.required") Password is required
+      li.error(v-if="!$v.password.minLength").
+        Password must have at least {{ $v.password.$params.minLength.min }} letters
+    .error(v-if="wrong") Username or password is incorrect!
 </template>
 
 <script>
+import { required, minLength } from 'vuelidate/lib/validators';
+
 export default {
   name: 'Login',
   data: () => ({
     username: '',
     password: '',
-    error: false
+    wrong: false
   }),
+  validations: {
+    username: {
+      required,
+      minLength: minLength(4)
+    },
+    password: {
+      required,
+      minLength: minLength(4)
+    }
+  },
   methods: {
     login() {
-      this.$store.dispatch('login', {
-        'username': this.username,
-        'password': this.password
-      })
-        .then(event => event ? this.$router.push('/') : this.isError(true));
+      if (!this.$v.username.$error && !this.$v.password.$error) {
+        this.$store.dispatch('login', {
+          'username': this.username,
+          'password': this.password
+        })
+          .then(event => event ? this.$router.push('/') : this.wrongData(true));
+      }
     },
-    isError(e) {
-      this.error = e ? true : false;
+    wrongData(e) {
+      this.wrong = e ? true : false;
     }
   }
 }
@@ -54,7 +75,15 @@ export default {
   width: 15rem;
   margin-bottom: 4rem;
 
-.errorForm
+form
+  margin-bottom: 1rem;
+
+.errorField
   border: 1px solid red;
   transition: 0.1s;
+
+.error
+  color: red;
+  font-size: 14px;
+  margin: 0 1rem;
 </style>
