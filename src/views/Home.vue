@@ -12,5 +12,5 @@ export default {
 
 <style lang="sass" scoped>
 p
-  margin: 2rem 0;
+  margin: 2rem 0
 </style>

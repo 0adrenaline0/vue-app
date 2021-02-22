@@ -1,15 +1,13 @@
 import Vue from 'vue';
-import Vuelidate from 'vuelidate';
+import VeeValidate from 'vee-validate';
 
-import App from '@/App.vue';
+import App from '@/App';
 import router from '@/router';
 import store from '@/store';
 
-import '@/styles/main.scss';
-
 Vue.config.productionTip = false;
 
-Vue.use(Vuelidate)
+Vue.use(VeeValidate);
 
 new Vue({
   el: '#app',

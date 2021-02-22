@@ -2,7 +2,7 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import store from '@/store';
 
-Vue.use(VueRouter)
+Vue.use(VueRouter);
 
 export default new VueRouter({
   mode: 'history',
@@ -37,8 +37,14 @@ export default new VueRouter({
       name: 'user',
       path: '/user/:username',
       beforeEnter: (to, from, next) => {
-        if (store.state.auth)
+        if (store.state.auth && store.state.auth.username == to.params.username)
+          next();
+        else
           next('/');
+      },
+      beforeLeave: (to, from, next) => {
+        if (store.state.auth && store.state.auth.username != to.params.username)
+          next(false);
         else
           next();
       },

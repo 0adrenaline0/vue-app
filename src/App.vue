@@ -19,9 +19,9 @@ export default {
 
 <style lang="sass">
 #app
-  display: flex;
-  flex-direction: column;
+  display: flex
+  flex-direction: column
 
 #wrap
-  margin: 2.4rem auto 0 auto;
+  margin: 2.4rem auto 0 auto
 </style>

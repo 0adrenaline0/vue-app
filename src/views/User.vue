@@ -1,10 +1,10 @@
 <template lang="pug">
   main#content
-    h1 {{auth.username}}
+    h1 {{ username }}
     #list
       Post(
         v-for="post in posts"
-        v-if="post.author == auth.username"
+        v-if="post.author == username"
         :key="`post${post.id}`"
         :post="post"
       )
@@ -16,16 +16,15 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
 import Preloader from '@/components/Preloader';
 import Post from '@/components/Post';
 
 export default {
   name: 'User',
   data: () => ({
-    posts: []
+    posts: [],
+    username: ''
   }),
-  computed: mapState(['auth']),
   components: {
     Preloader,
     Post
@@ -37,6 +36,7 @@ export default {
     }
   },
   created() {
+    this.username = this.$route.params.username;
     this.updatePosts();
   }
 }
@@ -44,5 +44,5 @@ export default {
 
 <style lang="sass" scoped>
 #content
-  width: 640px;
+  width: 640px
 </style>

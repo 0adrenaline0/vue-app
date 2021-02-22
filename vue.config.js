@@ -16,5 +16,12 @@ module.exports = {
         chunks: 'all'
       }
     }
+  },
+  css: {
+    loaderOptions: {
+      sass: {
+        prependData: '@import "@/styles/main.sass"'
+      }
+    }
   }
 }
